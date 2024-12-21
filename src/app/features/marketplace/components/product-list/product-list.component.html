@@ -1,0 +1,69 @@
+<div class="marketplace-container">
+    <!-- Carousel Section -->
+    <div class="carousel-container" *ngIf="featuredProducts.length > 0">
+      <div class="carousel-content">
+        <div class="carousel-slides" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+          <div class="carousel-slide" *ngFor="let product of featuredProducts">
+            <div class="slide-content">
+              <img [src]="product.image" [alt]="product.title">
+              <div class="slide-info">
+                <h3>{{ product.title }}</h3>
+                <p class="price">${{ product.price }}</p>
+                <button class="add-to-cart-button" (click)="addToCart(product)">
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <button class="carousel-control prev" (click)="previousSlide()">❮</button>
+      <button class="carousel-control next" (click)="nextSlide()">❯</button>
+      
+      <div class="carousel-indicators">
+        <button 
+          *ngFor="let _ of featuredProducts; let i = index" 
+          [class.active]="i === currentSlide"
+          (click)="goToSlide(i)">
+        </button>
+      </div>
+    </div>
+  
+    <!-- Search Section -->
+    <div class="search-section">
+      <h2>Products</h2>
+      <app-product-search (search)="onSearch($event)"></app-product-search>
+    </div>
+  
+    <!-- Loading and Error Messages -->
+    <div class="loading-message" *ngIf="loading">
+      Loading products...
+    </div>
+  
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Products Grid -->
+    <div class="products-grid" *ngIf="!loading && !errorMessage">
+      <div class="product-card" *ngFor="let product of products">
+        <div class="product-image">
+          <img [src]="product.image" [alt]="product.title">
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">{{ product.title }}</h3>
+          <p class="product-price">${{ product.price }}</p>
+          <div class="floating-menu">
+            <button class="add-to-cart" (click)="addToCart(product)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="no-products" *ngIf="!loading && !errorMessage && products.length === 0">
+      No products found.
+    </div>
+  </div>

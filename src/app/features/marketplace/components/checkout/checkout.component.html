@@ -1,0 +1,96 @@
+<div class="checkout-container">
+    <div class="checkout-content">
+      <div class="order-summary">
+        <h2>Order Summary</h2>
+        <div class="order-items">
+          <div class="order-item" *ngFor="let item of cartItems">
+            <div class="item-image">
+              <img [src]="item.product.image" [alt]="item.product.title">
+            </div>
+            <div class="item-details">
+              <h4>{{ item.product.title }}</h4>
+              <p>Quantity: {{ item.quantity }}</p>
+              <p class="item-price">${{ item.product.price | number:'1.2-2' }} x {{ item.quantity }}</p>
+              <p class="item-total">${{ getItemTotal(item) | number:'1.2-2' }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="order-total">
+          <span>Total Amount:</span>
+          <span class="total-price">${{ getTotalAmount() | number:'1.2-2' }}</span>
+        </div>
+      </div>
+  
+      <div class="payment-form">
+        <h2>Payment Details</h2>
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="payment-details">
+          <div class="form-group">
+            <label for="cardNumber">Card Number:</label>
+            <input
+              id="cardNumber"
+              type="text"
+              formControlName="cardNumber"
+              class="form-control"
+              placeholder="Enter 16-digit card number"
+              maxlength="16"
+            >
+            <div class="error-message" *ngIf="checkoutForm.get('cardNumber')?.touched && checkoutForm.get('cardNumber')?.errors">
+              <span *ngIf="checkoutForm.get('cardNumber')?.errors?.['required']">
+                Card number is required
+              </span>
+              <span *ngIf="checkoutForm.get('cardNumber')?.errors?.['pattern']">
+                Card number must be 16 digits
+              </span>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="cardHolderName">Card Holder Name:</label>
+            <input
+              id="cardHolderName"
+              type="text"
+              formControlName="cardHolderName"
+              class="form-control"
+              placeholder="Enter card holder name"
+            >
+            <div class="error-message" *ngIf="checkoutForm.get('cardHolderName')?.touched && checkoutForm.get('cardHolderName')?.errors?.['required']">
+              Card holder name is required
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="expirationDate">Expiration Date:</label>
+            <input
+              id="expirationDate"
+              type="text"
+              formControlName="expirationDate"
+              class="form-control"
+              placeholder="MM/YYYY"
+            >
+            <div class="error-message" *ngIf="checkoutForm.get('expirationDate')?.touched && checkoutForm.get('expirationDate')?.errors">
+              <span *ngIf="checkoutForm.get('expirationDate')?.errors?.['required']">
+                Expiration date is required
+              </span>
+              <span *ngIf="checkoutForm.get('expirationDate')?.errors?.['pattern']">
+                Use format MM/YYYY (e.g., 12/2024)
+              </span>
+            </div>
+          </div>
+  
+          <div class="form-actions">
+            <button type="submit" [disabled]="checkoutForm.invalid || loading">
+              {{ loading ? 'Processing...' : 'Pay $' + (getTotalAmount() | number:'1.2-2') }}
+            </button>
+          </div>
+  
+          <div class="success-message" *ngIf="successMessage">
+            {{ successMessage }}
+          </div>
+  
+          <div class="error-display" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

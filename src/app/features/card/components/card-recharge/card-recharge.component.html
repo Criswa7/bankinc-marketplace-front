@@ -1,0 +1,60 @@
+<div class="recharge-container">
+    <h2>Recharge Card</h2>
+    
+    <form [formGroup]="rechargeForm" (ngSubmit)="onSubmit()" class="recharge-form">
+      <div class="form-group">
+        <label for="cardNumber">Card Number:</label>
+        <input
+          id="cardNumber"
+          type="text"
+          formControlName="cardNumber"
+          class="form-control"
+          placeholder="Enter 16-digit card number"
+          maxlength="16"
+        >
+        <div class="error-message" *ngIf="rechargeForm.get('cardNumber')?.touched && rechargeForm.get('cardNumber')?.errors">
+          <span *ngIf="rechargeForm.get('cardNumber')?.errors?.['required']">
+            Card number is required
+          </span>
+          <span *ngIf="rechargeForm.get('cardNumber')?.errors?.['pattern']">
+            Card number must be 16 digits
+          </span>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="amount">Amount (USD):</label>
+        <input
+          id="amount"
+          type="number"
+          formControlName="amount"
+          class="form-control"
+          placeholder="Enter amount to recharge"
+          min="0.01"
+          step="0.01"
+        >
+        <div class="error-message" *ngIf="rechargeForm.get('amount')?.touched && rechargeForm.get('amount')?.errors">
+          <span *ngIf="rechargeForm.get('amount')?.errors?.['required']">
+            Amount is required
+          </span>
+          <span *ngIf="rechargeForm.get('amount')?.errors?.['min']">
+            Amount must be greater than 0
+          </span>
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" [disabled]="rechargeForm.invalid || loading">
+          {{ loading ? 'Processing...' : 'Recharge Card' }}
+        </button>
+      </div>
+    </form>
+  
+    <div class="success-message" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+  
+    <div class="error-display" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>

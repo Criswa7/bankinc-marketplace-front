@@ -1,0 +1,65 @@
+<div class="card-creation-container">
+    <h2>Create New Card</h2>
+    
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit()" class="card-form">
+      <div class="form-group">
+        <label for="holderName">Holder Name:</label>
+        <input
+          id="holderName"
+          type="text"
+          formControlName="holderName"
+          class="form-control"
+          placeholder="Enter holder name"
+        >
+        <div class="error-message" *ngIf="cardForm.get('holderName')?.touched && cardForm.get('holderName')?.invalid">
+          Holder name is required
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="cardType">Card Type:</label>
+        <select
+          id="cardType"
+          formControlName="cardType"
+          class="form-control"
+        >
+          <option value="">Select card type</option>
+          <option *ngFor="let type of cardTypes" [value]="type">
+            {{type}}
+          </option>
+        </select>
+        <div class="error-message" *ngIf="cardForm.get('cardType')?.touched && cardForm.get('cardType')?.invalid">
+          Card type is required
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="productId">Product ID:</label>
+        <input
+          id="productId"
+          type="text"
+          formControlName="productId"
+          class="form-control"
+          placeholder="Enter 6-digit product ID"
+          maxlength="6"
+        >
+        <div class="error-message" *ngIf="cardForm.get('productId')?.touched && cardForm.get('productId')?.invalid">
+          Product ID must be 6 digits
+        </div>
+      </div>
+  
+      <div class="form-actions">
+        <button type="submit" [disabled]="cardForm.invalid || loading">
+          {{ loading ? 'Creating...' : 'Create Card' }}
+        </button>
+      </div>
+    </form>
+  
+    <div class="success-message" *ngIf="successMessage">
+      {{ successMessage }}
+    </div>
+  
+    <div class="error-display" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </div>

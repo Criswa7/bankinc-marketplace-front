@@ -1,59 +1,190 @@
-# MarketplaceFront
+# Bank Inc Marketplace
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+Aplicación de marketplace que permite la gestión de tarjetas y compra de productos.
 
-## Development server
+## Características
 
-To start a local development server, run:
+### Módulo de Administración de Tarjetas
+- Creación de tarjetas débito y crédito
+- Recarga de saldo
+- Visualización de transacciones
+- Anulación de transacciones (hasta 24 horas después)
 
+### Módulo de Marketplace
+- Carrusel de productos destacados
+- Buscador de productos por título
+- Catálogo de productos con precios e imágenes
+- Carrito de compras flotante
+- Sistema de checkout integrado
+
+## Tecnologías Utilizadas
+
+### Backend
+- Spring Boot 3.4.1
+- Java 17
+- JPA/Hibernate
+- H2 Database
+- Lombok
+- Spring Validation
+
+### Frontend
+- Angular 17 (Standalone Components)
+- TypeScript
+- CSS puro (sin frameworks externos)
+- RxJS
+- Angular Router
+
+## Requisitos Previos
+
+- Java 17+
+- Node.js 18+
+- npm 9+
+- Angular CLI 17+
+
+## Instalación y Ejecución
+
+### Backend
+
+1. Clonar el repositorio:
+```bash
+git clone [url-del-repositorio]
+```
+
+2. Navegar al directorio del backend:
+```bash
+cd backend
+```
+
+3. Ejecutar la aplicación:
+```bash
+./mvnw spring-boot:run
+```
+
+El servidor estará disponible en `http://localhost:8080`
+
+### Frontend
+
+1. Navegar al directorio del frontend:
+```bash
+cd marketplace-front
+```
+
+2. Instalar dependencias:
+```bash
+npm install
+```
+
+3. Ejecutar la aplicación:
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+La aplicación estará disponible en `http://localhost:4200`
 
-## Code scaffolding
+## Estructura del Proyecto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Backend
 
-```bash
-ng generate component component-name
+```
+src/
+├── main/
+│   ├── java/com/bankinc/marketplace/
+│   │   ├── controller/
+│   │   ├── model/
+│   │   ├── repository/
+│   │   ├── service/
+│   │   └── exception/
+│   └── resources/
+│       └── application.properties
+└── test/
+    └── java/com/bankinc/marketplace/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Frontend
 
-```bash
-ng generate --help
+```
+src/
+├── app/
+│   ├── core/
+│   │   ├── models/
+│   │   └── services/
+│   └── features/
+│       ├── card/
+│       │   └── components/
+│       └── marketplace/
+│           └── components/
+├── assets/
+└── environments/
 ```
 
-## Building
+## Características Implementadas
 
-To build the project run:
+### Nivel 1
+- ✅ Backend para administración de tarjetas y transacciones
+- ✅ Frontend con integración a APIs de productos
+- ✅ Módulo de marketplace completo
 
-```bash
-ng build
-```
+### Nivel 2
+- ✅ Listado de transacciones
+- ✅ Anulación de transacciones
+- ✅ Tests unitarios
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### Nivel 3
+- ⏳ Despliegue en la nube (pendiente)
 
-## Running unit tests
+## Buenas Prácticas Implementadas
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Arquitectura
+- Arquitectura por capas en el backend
+- Componentes standalone en Angular
+- Servicios reutilizables
+- Manejo centralizado de estados
 
-```bash
-ng test
-```
+### Desarrollo
+- Clean Code
+- SOLID Principles
+- DRY (Don't Repeat Yourself)
+- Inyección de dependencias
+- Manejo de excepciones personalizado
 
-## Running end-to-end tests
+### Frontend
+- Componentes modulares
+- Comunicación padre-hijo
+- Observables y servicios reactivos
+- Validaciones de formularios
+- CSS modular y responsivo
 
-For end-to-end (e2e) testing, run:
+### Testing
+- Tests unitarios en servicios
+- Tests unitarios en componentes
+- Cobertura de casos críticos
+- Mocks y spies
 
-```bash
-ng e2e
-```
+## API Endpoints
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Tarjetas
+- POST `/api/cards` - Crear tarjeta
+- POST `/api/cards/recharge` - Recargar tarjeta
+- GET `/api/cards/{cardNumber}` - Obtener tarjeta
 
-## Additional Resources
+### Transacciones
+- POST `/api/transactions` - Crear transacción
+- POST `/api/transactions/{id}/cancel` - Anular transacción
+- GET `/api/transactions/card/{cardNumber}` - Listar transacciones
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Base de Datos
+
+Se utiliza H2 como base de datos en memoria con las siguientes tablas:
+- `cards` - Almacena información de tarjetas
+- `transactions` - Registro de transacciones
+
+## Consideraciones de Seguridad
+- Validación de datos de entrada
+- Manejo seguro de transacciones
+- Validaciones de negocio
+- Control de acceso a endpoints
+
+## Contacto y Soporte
+Cristian De Jesus Florez Llorente
+Whatsapp: +57 3006061500
+Email: cristianpmp15@gmail.com

@@ -1,0 +1,51 @@
+<div class="cart-container" [class.expanded]="isExpanded">
+    <div class="cart-header" (click)="toggleCart()">
+      <h3>Shopping Cart ({{ cartItems.length }} items)</h3>
+      <span class="total-amount">${{ getTotalAmount() | number:'1.2-2' }}</span>
+      <button class="toggle-button">
+        {{ isExpanded ? '▼' : '▲' }}
+      </button>
+    </div>
+  
+    <div class="cart-content" *ngIf="isExpanded">
+      <div class="cart-items" *ngIf="cartItems.length > 0">
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <div class="item-image">
+            <img [src]="item.product.image" [alt]="item.product.title">
+          </div>
+          <div class="item-details">
+            <h4>{{ item.product.title }}</h4>
+            <p class="item-price">${{ item.product.price | number:'1.2-2' }}</p>
+            <div class="item-controls">
+              <div class="quantity-control">
+                <button (click)="updateQuantity(item, item.quantity - 1)">-</button>
+                <input type="number" [ngModel]="item.quantity" 
+                       (ngModelChange)="updateQuantity(item, $event)"
+                       min="1">
+                <button (click)="updateQuantity(item, item.quantity + 1)">+</button>
+              </div>
+              <button class="remove-button" (click)="removeItem(item.product.id)">
+                Remove
+              </button>
+            </div>
+            <p class="item-total">Total: ${{ getItemTotal(item) | number:'1.2-2' }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="cart-empty" *ngIf="cartItems.length === 0">
+        Your cart is empty
+      </div>
+  
+      <div class="cart-footer" *ngIf="cartItems.length > 0">
+        <div class="cart-total">
+          <span>Total:</span>
+          <span>${{ getTotalAmount() | number:'1.2-2' }}</span>
+        </div>
+        <div class="cart-actions">
+          <button class="clear-cart" (click)="clearCart()">Clear Cart</button>
+          <button class="checkout" (click)="proceedToCheckout()">Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
